@@ -1,0 +1,68 @@
+
+        frameLayout {
+
+            linearLayout {
+                orientation = LinearLayout.VERTICAL
+
+                button {
+                    width = dip(130)
+                    height = dip(130)
+                    backgroundColor = Color.BLUE
+
+                    onClick {
+                        startActivity(Intent(this@AboutActivity, MainActivity::class.java))
+                    }
+
+
+                }.lparams {
+                    gravity = Gravity.CENTER or Gravity.TOP
+                    topMargin = dip(40)
+                }
+
+                textView {
+                    text = "Baker's Dream"
+                    textSize = 18f
+                }.lparams {
+                    topMargin = dip(40)
+                    leftMargin = dip(20)
+                }
+
+                textView {
+                    text = "Tulentseva Elena"
+                    textSize = 18f
+                }.lparams {
+                    topMargin = dip(70)
+                    leftMargin = dip(20)
+                }
+
+                textView {
+                    text = "elena.thule@gmail.com"
+                    textSize = 18f
+                    textColor = Color.BLUE
+                }.lparams {
+                    leftMargin = dip(20)
+                }
+            }
+
+            textView {
+                text = "IT School 2018"
+                textSize = 18f
+            }.lparams {
+                gravity = Gravity.BOTTOM or Gravity.END
+                bottomMargin = dip(45)
+                rightMargin = dip(20)
+            }
+
+            textView {
+                text = "#хачувайти"
+                textSize = 18f
+                textColor = Color.MAGENTA
+            }.lparams {
+                gravity = Gravity.BOTTOM or Gravity.END
+                bottomMargin = dip(20)
+                rightMargin = dip(20)
+            }
+
+        }
+    }
+}
