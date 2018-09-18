@@ -5,11 +5,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Gravity
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
-import org.jetbrains.anko.UI
+import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
-import org.jetbrains.anko.textView
 
 class ProductsActivity : AppCompatActivity() {
 
@@ -30,8 +31,6 @@ class ProductsActivity : AppCompatActivity() {
     }
 }
 
-class Product(val title: String, val price: Double)
-class ProductViewHolder(val view: TextView) : RecyclerView.ViewHolder(view)
 class ProductsAdapter(
         val products: List<Product>,
         val context: Context
@@ -40,17 +39,44 @@ class ProductsAdapter(
     override fun getItemCount() = products.size
 
     override fun onCreateViewHolder (RecyclerView: ViewGroup, viewType: Int) = run {
-        val itemUI = context.UI {
+
+        val itemView = ProductView(context)
+
+        ProductViewHolder(view = itemView)
+
+        /* val itemUI = context.UI {
             textView {
                 text = "My text"
-            }
+            } */
         }
 
-        ProductViewHolder(view = itemUI.view as TextView)
-    }
+        //ProductViewHolder(view = itemUI.view as TextView)
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = products[position]
-        holder.view.text = product.title
+        holder.view.titleView.text = product.title
+        holder.view.priceView.text = product.price.toString()
     }
 }
+
+class ProductView(context: Context) : FrameLayout(context) {
+    lateinit var titleView: TextView
+    lateinit var priceView: TextView
+    init {
+        layoutParams = LayoutParams(matchParent, wrapContent)
+
+        frameLayout {
+            titleView = textView {
+
+            }
+            priceView = textView (
+
+            ).lparams {
+                gravity = Gravity.END
+            }
+        }
+    }
+}
+
+class Product(val title: String, val price: Double)
+class ProductViewHolder(val view: ProductView) : RecyclerView.ViewHolder(view)
