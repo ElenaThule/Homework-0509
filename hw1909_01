@@ -1,0 +1,125 @@
+package com.example.hitori.elena_tulentseva_shop
+
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.Gravity
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
+import org.jetbrains.anko.*
+import org.jetbrains.anko.recyclerview.v7.recyclerView
+
+class ProductsActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val cupcCup1 = Product(title = "Бумажные формочки нежно-розовые Polka dot", price = 3.5)
+        val cupcCup2 = Product(title = "Бумажные формочки зелено-розовые Polka dot", price = 3.5)
+        val cupcCup3 = Product(title = "Картонные стаканчики квадратные Share & Enjoy", price = 13.00)
+        val cupcBox1 = Product(title = "Коробка для 14 макаронс белая", price = 43.00)
+        val cupcBox2 = Product(title = "Коробка для 12 капкейков Крафт", price = 55.00)
+        val cupcBox3 = Product(title = "Коробка для 4 капкейков подарочная \"Thank you\"", price = 120.00)
+        val cupcBox4 = Product(title = "Коробочка подарочная Крафт с окном 120 х 190 х 60 мм", price = 28.00)
+        val bakingRing1 = Product(title = "Комплект для приготовления Макаронс", price = 443.00)
+        val bakingRing2 = Product(title = "Металлическая Форма для выпечки Wilton \"Пряничные человечки\",   12 ячеек", price = 1040.00)
+        val bakingRing3 = Product(title = "Форма для выпечки Дарт Вейдер (Звездные войны) Wilton", price = 1299.00)
+        val bakingRing4 = Product(title = "Форма для выпечки Человек-паук Wilton", price = 1299.00)
+        val plunger1 = Product(title = "Wilton Набор форм для печенья \"Новогодние №1\", 3 шт, Снежинка, Бант, Лист Остролиста", price = 375.00)
+        val plunger2 = Product(title = "Wilton Набор форм для печенья Цветочки, 3 шт", price = 300.00)
+        val plunger3 = Product(title = "Набор плунжеров Звездные войны", price = 199.00)
+
+
+        val productList = listOf(cupcCup1, cupcCup2, cupcCup3, cupcBox1, cupcBox2, cupcBox3,
+                cupcBox4, bakingRing1, bakingRing2, bakingRing3, bakingRing4, plunger1, plunger2,
+                plunger3)
+
+        recyclerView {
+            layoutManager = LinearLayoutManager(this@ProductsActivity)
+            adapter = ProductsAdapter(products = productList, context = this@ProductsActivity)
+
+        }
+    }
+}
+
+class ProductsAdapter(
+        val products: List<Product>,
+        val context: Context
+) : RecyclerView.Adapter<ProductViewHolder>() {
+
+    override fun getItemCount() = products.size
+
+    override fun onCreateViewHolder (RecyclerView: ViewGroup, viewType: Int) = run {
+
+        val itemView = ProductView(context)
+        ProductViewHolder(view = itemView)
+
+    }
+
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+
+        val product = products[position]
+        holder.view.titleView.text = product.title
+        holder.view.priceView.text = product.price.toString()
+
+    }
+}
+
+class ProductView(context: Context) : FrameLayout(context) {
+
+    lateinit var imgView: LinearLayout
+    lateinit var titleView: TextView
+    lateinit var priceView: TextView
+    init {
+
+        layoutParams = LayoutParams(matchParent, wrapContent)
+
+        frameLayout {
+            backgroundColor = Color.parseColor("#FCE4EC")
+
+            imgView = linearLayout {
+
+                imageView {
+
+                }.lparams(width = dip(80)) {
+                    background = ColorDrawable(Color.parseColor("#F48FB1"))
+                }
+
+            }.lparams {
+                width = dip(80)
+                height = dip(80)
+                gravity = Gravity.START
+                topMargin = dip(20)
+                leftMargin = dip(10)
+                bottomMargin = dip(20)
+            }
+
+            titleView = textView {
+                textSize = 18f
+            }.lparams {
+                width = dip(230)
+                leftMargin = dip(20)
+                gravity = Gravity.CENTER or Gravity.CENTER_VERTICAL
+            }
+
+            priceView = textView {
+                textSize = 19f
+                textColor = Color.parseColor("#EC407A")
+            }.lparams {
+                rightMargin = dip(10)
+                gravity = Gravity.END or Gravity.CENTER_VERTICAL
+            }
+        }
+
+    }
+}
+
+class Product(val title: String, val price: Double)
+
+class ProductViewHolder(val view: ProductView) : RecyclerView.ViewHolder(view)
