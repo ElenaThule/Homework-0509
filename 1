@@ -1,0 +1,74 @@
+package com.example.hitori.super_shop
+
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.support.annotation.RequiresApi
+import android.view.Gravity
+import android.widget.LinearLayout
+import org.jetbrains.anko.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
+
+class MainActivity : AppCompatActivity() {
+
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        frameLayout {
+            backgroundColor = Color.WHITE
+
+            linearLayout {
+                orientation = LinearLayout.VERTICAL
+
+                imageView {
+                    setImageResource(R.drawable.cupcake_line_drawing)
+                }.lparams(width = dip(100)) {
+                    background = ColorDrawable(Color.parseColor("#69FFB4"))
+                }
+
+            }.lparams {
+                width = dip(100)
+                height = dip(100)
+                gravity = Gravity.TOP or Gravity.CENTER
+                topMargin = dip(20)
+            }
+
+            linearLayout {
+                orientation = LinearLayout.VERTICAL
+
+
+                editText {
+                    hint = "Логин"
+                }
+
+                editText {
+                    hint = "Пароль"
+                }
+
+            }.lparams {
+                width = dip(240)
+                gravity = Gravity.CENTER
+            }
+
+            button {
+                text = "Войти"
+                textColor = Color.WHITE
+                backgroundColor = Color.BLUE
+
+                onClick {
+                    startActivity<ProductsActivity>()
+                    //startActivity(Intent(this@MainActivity, ProductsActivity::class.java))
+                }
+
+            }.lparams {
+                width = matchParent
+                gravity = Gravity.BOTTOM or Gravity.CENTER
+                margin = dip(35)
+            }
+        }
+    }
+}
